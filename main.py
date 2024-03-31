@@ -1,7 +1,7 @@
 #import the necessary libraries
 import cv2
 import mediapipe as mp
-import numpy, math
+import numpy, math, time
 from cvzone.HandTrackingModule import HandDetector
 
 
@@ -55,13 +55,17 @@ while True:
 
             cv2.imshow("imgCrop", imgCrop)
             cv2.imshow("imgWhite", imgWhite)
+
+            if cv2.waitKey(1) == ord('s'):
+                cv2.imwrite(f'/Gestures/Gesture{time.ctime()}.jpg', imgWhite)
         except:
             print("The hand must be shown entirely")
-        
 
     cv2.imshow('frame', frame)
-    if  cv2.waitKey(1) == ord('q'):
+    key = cv2.waitKey(1)
+    if  key == ord('q'):
         break
+    
 
 
 cap.release()
