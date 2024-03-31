@@ -4,6 +4,11 @@ import mediapipe as mp
 import numpy, math, time
 from cvzone.HandTrackingModule import HandDetector
 
+# from keras.models import load_model
+
+# classifier = load_model("Model/keras_model.h5", compile=False)
+# class_names = open("Model/labels.txt", "r").readlines()
+
 
 offset = 20
 imgSize = 300
@@ -14,6 +19,9 @@ if not cap.isOpened():
     exit()
 detector = HandDetector(maxHands=1)
 
+
+
+labels = ["Gesture"]
 
 while True:
     ret, frame = cap.read()
@@ -44,6 +52,13 @@ while True:
                 imgResizeShape = imgResize.shape
                 wGap = math.ceil((300 - wCal) / 2)
                 imgWhite[0: imgResizeShape[0], wGap: imgResizeShape[1] + wGap] = imgResize
+                # prediction = classifier.predict(imgWhite)
+                # index = numpy.argmax(prediction)
+                # class_name = class_names[index]
+                # confidence_score = prediction[0][index]
+
+                # print("Class:", class_name[2:], end="")
+                # print("Confidence Score:", str(numpy.round(confidence_score * 100))[:-2], "%")
             
             else:
                 k = imgSize / w
@@ -57,7 +72,8 @@ while True:
             cv2.imshow("imgWhite", imgWhite)
 
             if cv2.waitKey(1) == ord('s'):
-                cv2.imwrite(f'/Gestures/Gesture{time.ctime()}.jpg', imgWhite)
+                print("Save")
+                cv2.imwrite(f'Gestures/Gesture_{time.time()}.jpg', imgWhite)
         except:
             print("The hand must be shown entirely")
 
