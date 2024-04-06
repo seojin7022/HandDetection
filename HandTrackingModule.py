@@ -7,9 +7,9 @@ class handDetector():
         self.maxHands = maxHands
         self.detectionCon = detectionCon
         self.trackCon = trackCon
-        self.mpHands = mp.solutions.hads
-        self.hands = self.mpHands.Hands(mode = self.mode, maxHands = self.maxHands,
-                                        detectionCon = self.detectionCon, trackCon = self.trackCon)
+        self.mpHands = mp.solutions.hands
+        self.hands = self.mpHands.Hands(self.mode, self.maxHands, 1,
+                                        self.detectionCon, self.trackCon)
         self.mpDraw = mp.solutions.drawing_utils
     def findHands(self, img, draw=True):
         imgRGB = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
@@ -37,7 +37,7 @@ class handDetector():
 def main():
     pTime = 0
     cTime = 0
-    cap = cv2.VideoCapture(1)
+    cap = cv2.VideoCapture(0)
     detector = handDetector()
     while True:
         success, img = cap.read()

@@ -1,1 +1,3 @@
 0 Gesture
+1 Fist
+2 Nothing
